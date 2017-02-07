@@ -52,19 +52,32 @@ window.onload = function() {
         ground.body.immovable = true;
         
         //  Now let's create two ledges
-        var ledge = platforms.create(400, 400, 'ledge');
+        //var ledge = platforms.create(400, 400, 'ledge');
         
-        ledge.body.immovable = true;
+        //ledge.body.immovable = true;
         
-        ledge = platforms.create(50, 250, 'ledge');
+        //ledge = platforms.create(50, 250, 'ledge');
         
-        ledge.body.immovable = true;
+        //ledge.body.immovable = true;
         
-        var image = game.add.sprite(0, 100, 'ledge');
-        game.physics.enable(image, Phaser.Physics.ARCADE);
-        image.body.velocity.setTo(200,0);
-        image.body.collideWorldBounds = true;
-        image.body.bounce.set(1);
+        var ledge1 = game.add.sprite(0, 100, 'ledge');
+        game.physics.enable(ledge1, Phaser.Physics.ARCADE);
+        ledge1.body.velocity.setTo(200,0);
+        ledge1.body.collideWorldBounds = true;
+        ledge1.body.bounce.set(1);
+        ledge1.body.immovable = true;
+        
+        var ledge2 = game.add.sprite(400, 400, 'ledge');
+        game.physics.enable(ledge2, Phaser.Physics.ARCADE);
+        ledge2.body.velocity.setTo(0,100);
+        ledge2.body.collideWorldBounds = true;
+        ledge2.body.bounce.set(1);
+        
+        var ledge3 = game.add.sprite(50, 250, 'ledge');
+        game.physics.enable(ledge3, Phaser.Physics.ARCADE);
+        ledge3.body.velocity.setTo(100,100);
+        ledge3.body.collideWorldBounds = true;
+        ledge3.body.bounce.set(1);
         
     }
     
