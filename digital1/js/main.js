@@ -13,20 +13,27 @@ window.onload = function() {
     
     "use strict";
     
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update });
     
     function preload() {
         
-        game.load.image('sky', 'assets/sky.png');
-        game.load.image('ground', 'assets/platform.png');
-        game.load.image('star', 'assets/star.png');
-        game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.image('space', 'assets/space.png');
         game.load.image('ledge', 'assets/moon_ledge.png');
+        game.load.image('guy', 'assets/guy.png');
+        game.load.image('spaceship', 'assets/spaceship.png');
+        game.load.image('ufo', 'assets/ufo.png');
         
     }
     
-    var platforms;
+    
+    var ledgestart;
+    var player;
+    var cursors;
+    
+    var ledges;
+    var spaceship;
+    var ufo;
+    var stateText;
     
     function create() {
         
@@ -36,51 +43,76 @@ window.onload = function() {
         //  A simple background for our game
         game.add.sprite(0, 0, 'space');
         
-        //  The platforms group contains the ground and the 2 ledges we can jump on
-        platforms = game.add.group();
         
-        //  We will enable physics for any object that is created in this group
-        platforms.enableBody = true;
+        ledges = game.add.group();
+        ledges.enableBody = true;
         
-        // Here we create the ground.
-        var ground = platforms.create(0, game.world.height - 64, 'ground');
         
-        //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        ground.scale.setTo(2, 2);
+        var ledge = ledges.create(0, 550, 'ledge');
+        ledge.body.immovable = true;
         
-        //  This stops it from falling away when you jump on it
-        ground.body.immovable = true;
+        var ledge = ledges.create(400, 400, 'ledge');
+        ledge.body.immovable = true;
         
-        //  Now let's create two ledges
-        //var ledge = platforms.create(400, 400, 'ledge');
+        spaceship = game.add.sprite(750, 0, 'spaceship');
+        game.physics.enable(spaceship, Phaser.Physics.ARCADE);
         
-        //ledge.body.immovable = true;
+        ufo = game.add.sprite(0, 0, 'ufo');
+        game.physics.enable(ufo, Phaser.Physics.ARCADE);
+        ufo.body.collideWorldBounds = true;
+        ufo.body.immovable = true;
+        ufo.body.velocity.setTo(300,300);
+        ufo.body.allowGravity = false;
+        ufo.body.bounce.set(1);
         
-        //ledge = platforms.create(50, 250, 'ledge');
+        //GAMESTATE
+        stateText = game.add.text(game.world.centerX,game.world.centerY,' ', {font: '84px Arial', fill: '#fff' });
+        stateText.anchor.setTo(0.5, 0.5);
+        stateText.visible = false;
         
-        //ledge.body.immovable = true;
+        //PLAYER
+        player = game.add.sprite(20,400, 'guy');
+        game.physics.arcade.enable(player, Phaser.Physics.ARCADE);
+        player.body.gravity.y = 800;
+        player.body.bounce.y = 0.1;
+        player.body.collideWorldBounds = true;
         
-        var ledge1 = game.add.sprite(0, 100, 'ledge');
-        game.physics.enable(ledge1, Phaser.Physics.ARCADE);
-        ledge1.body.velocity.setTo(200,0);
-        ledge1.body.collideWorldBounds = true;
-        ledge1.body.bounce.set(1);
-        ledge1.body.immovable = true;
-        
-        var ledge2 = game.add.sprite(400, 400, 'ledge');
-        game.physics.enable(ledge2, Phaser.Physics.ARCADE);
-        ledge2.body.velocity.setTo(0,100);
-        ledge2.body.collideWorldBounds = true;
-        ledge2.body.bounce.set(1);
-        
-        var ledge3 = game.add.sprite(50, 250, 'ledge');
-        game.physics.enable(ledge3, Phaser.Physics.ARCADE);
-        ledge3.body.velocity.setTo(100,100);
-        ledge3.body.collideWorldBounds = true;
-        ledge3.body.bounce.set(1);
+        //CURSOR
+        cursors = game.input.keyboard.createCursorKeys();
         
     }
     
+    function destination (player, star) {
+        spaceship.kill();
+        stateText.text = " You Win!";
+        stateText.visible = true;
+    }
+    
+    function ufoHit(player, ufo){
+        ufo.kill();
+        stateText.text = "GAME OVER!";
+        stateText.visible = true;
+    }
+    
     function update() {
+        var hitLedge = game.physics.arcade.collide(player, ledges);
+        game.physics.arcade.overlap(player, spaceship, destination, null, this);
+        game.physics.arcade.overlap(ufo, player, ufoHit, null, this);
+        game.physics.arcade.collide(player, ufo);
+        
+        
+        player.body.velocity.x = 0;
+        
+        if (cursors.left.isDown){
+            player.body.velocity.x = -150;
+        }
+        if (cursors.right.isDown){
+            player.body.velocity.x = 150;
+        }
+        if (cursors.up.isDown)// && player.body.touching.down && hitLedge)
+        {
+            player.body.velocity.y = -550;
+        }
+         
     }
 };
