@@ -100,7 +100,7 @@ window.onload = function() {
         ufo.body.allowGravity = false;
         ufo.body.bounce.set(1);
         
-        ufo = game.add.sprite(800, 600, 'ufo');
+        ufo2 = game.add.sprite(800, 600, 'ufo');
         game.physics.enable(ufo, Phaser.Physics.ARCADE);
         ufo.body.collideWorldBounds = true;
         ufo.body.immovable = true;
@@ -135,6 +135,11 @@ window.onload = function() {
         ufo.kill();
         stateText.text = "GAME OVER!";
         stateText.visible = true;
+        
+        function ufoHit(player, ufo2){
+            ufo2.kill();
+            stateText.text = "GAME OVER!";
+            stateText.visible = true;
     }
     
     function update() {
