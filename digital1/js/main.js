@@ -50,9 +50,47 @@ window.onload = function() {
         
         var ledge = ledges.create(0, 550, 'ledge');
         ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
         
         var ledge = ledges.create(400, 400, 'ledge');
         ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(100, 450, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(150, 300, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(300, 600, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(600, 300, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(600, 500, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(550, 145, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(100, 100, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(300, 550, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
+        
+        var ledge = ledges.create(300, 200, 'ledge');
+        ledge.body.immovable = true;
+        ledge.body.checkCollision.down = false;
         
         spaceship = game.add.sprite(750, 0, 'spaceship');
         game.physics.enable(spaceship, Phaser.Physics.ARCADE);
@@ -65,6 +103,14 @@ window.onload = function() {
         ufo.body.allowGravity = false;
         ufo.body.bounce.set(1);
         
+        ufo = game.add.sprite(800, 600, 'ufo');
+        game.physics.enable(ufo, Phaser.Physics.ARCADE);
+        ufo.body.collideWorldBounds = true;
+        ufo.body.immovable = true;
+        ufo.body.velocity.setTo(200,400);
+        ufo.body.allowGravity = false;
+        ufo.body.bounce.set(1);
+        
         //GAMESTATE
         stateText = game.add.text(game.world.centerX,game.world.centerY,' ', {font: '84px Arial', fill: '#fff' });
         stateText.anchor.setTo(0.5, 0.5);
@@ -74,8 +120,8 @@ window.onload = function() {
         player = game.add.sprite(20,400, 'guy');
         game.physics.arcade.enable(player, Phaser.Physics.ARCADE);
         player.body.gravity.y = 800;
-        player.body.bounce.y = 0.1;
-        player.body.collideWorldBounds = true;
+        player.body.bounce.y = 0;
+        //player.body.collideWorldBounds = true;
         
         //CURSOR
         cursors = game.input.keyboard.createCursorKeys();
@@ -83,7 +129,7 @@ window.onload = function() {
     }
     
     function destination (player, star) {
-        spaceship.kill();
+        player.kill();
         stateText.text = " You Win!";
         stateText.visible = true;
     }
@@ -109,7 +155,7 @@ window.onload = function() {
         if (cursors.right.isDown){
             player.body.velocity.x = 150;
         }
-        if (cursors.up.isDown)// && player.body.touching.down && hitLedge)
+        if (cursors.up.isDown && player.body.touching.down && hitLedge)
         {
             player.body.velocity.y = -550;
         }
