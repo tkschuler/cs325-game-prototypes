@@ -37,11 +37,8 @@ window.onload = function() {
     
     function create() {
         
-        //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        
-        //  A simple background for our game
-        //game.add.sprite(0, 0, 'space');
+
         game.add.tileSprite(0, 0, 800, 600, 'space');
         
         ledges = game.add.group();
