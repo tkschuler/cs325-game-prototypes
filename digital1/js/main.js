@@ -41,8 +41,8 @@ window.onload = function() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         
         //  A simple background for our game
-        game.add.sprite(0, 0, 'space');
-        
+        //game.add.sprite(0, 0, 'space');
+        game.add.tileSprite(0, 0, 800, 600, 'space');
         
         ledges = game.add.group();
         ledges.enableBody = true;
