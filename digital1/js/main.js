@@ -37,8 +37,12 @@ window.onload = function() {
     
     function create() {
         
+        -        //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
+        -
+        -        //  A simple background for our game
+        -        //game.add.sprite(0, 0, 'space');
+        +
         game.add.tileSprite(0, 0, 800, 600, 'space');
         
         ledges = game.add.group();
@@ -100,7 +104,7 @@ window.onload = function() {
         ufo.body.allowGravity = false;
         ufo.body.bounce.set(1);
         
-        ufo2 = game.add.sprite(800, 600, 'ufo');
+        ufo = game.add.sprite(800, 600, 'ufo');
         game.physics.enable(ufo, Phaser.Physics.ARCADE);
         ufo.body.collideWorldBounds = true;
         ufo.body.immovable = true;
@@ -135,11 +139,6 @@ window.onload = function() {
         ufo.kill();
         stateText.text = "GAME OVER!";
         stateText.visible = true;
-        
-        function ufoHit(player, ufo2){
-            ufo2.kill();
-            stateText.text = "GAME OVER!";
-            stateText.visible = true;
     }
     
     function update() {
@@ -161,6 +160,6 @@ window.onload = function() {
         {
             player.body.velocity.y = -550;
         }
-         
+        
     }
 };
