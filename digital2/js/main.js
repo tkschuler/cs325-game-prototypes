@@ -33,6 +33,8 @@ window.onload = function() {
     
     function create() {
         
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        
         //volcano = game.add.tileSprite(0, 0, 800, 600, 'volcanobg');
         
         wizard = game.add.sprite(30, 230, 'wizard');
@@ -49,15 +51,22 @@ window.onload = function() {
         stateText.anchor.setTo(0.5, 0.5);
         stateText.visible = false;
         
-        /*
-        //game.physics.startSystem(Phaser.Physics.ARCADE);
         
-        firebolts = game.add.group();
+        //firebolts = game.add.group();
         //firebolts.enableBody = true;
+        //firebolts.body.collideWorldBounds = true;
         
-        var firebolt = firebolts.create(200, 300, 'firebolt');
-        //firebolt.body.immovable = true;
-         */
+        
+        var firebolt = game.add.sprite(200, 60, 'firebolt');
+        game.physics.enable(firebolt, Phaser.Physics.ARCADE);
+        firebolt.body.collideWorldBounds = true;
+        firebolt.body.immovable = true;
+        firebolt.body.velocity.x = 600;
+        firebolt.body.allowGravity = false;
+        firebolt.body.bounce.set(1);
+        
+        
+        
     }
     
     function update() {
