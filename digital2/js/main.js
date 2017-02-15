@@ -20,6 +20,7 @@ window.onload = function() {
         game.load.image('volcanobg', 'assets/volcano.jpg');
         game.load.image('wizard', 'assets/wizard.png');
         game.load.image('warlock', 'assets/warlock.png');
+        game.load.image('firebolt', 'assets/firebolt.png');
         
     }
     
@@ -28,9 +29,11 @@ window.onload = function() {
     var volcano;
     var stateText;
     
+    var firebolts;
+    
     function create() {
         
-        volcano = game.add.tileSprite(0, 0, 800, 600, 'volcanobg');
+        //volcano = game.add.tileSprite(0, 0, 800, 600, 'volcanobg');
         
         wizard = game.add.sprite(30, 230, 'wizard');
         wizard.inputEnabled = true;
@@ -46,13 +49,22 @@ window.onload = function() {
         stateText.anchor.setTo(0.5, 0.5);
         stateText.visible = false;
         
+        /*
+        //game.physics.startSystem(Phaser.Physics.ARCADE);
+        
+        firebolts = game.add.group();
+        //firebolts.enableBody = true;
+        
+        var firebolt = firebolts.create(200, 300, 'firebolt');
+        //firebolt.body.immovable = true;
+         */
     }
     
     function update() {
         
         if (checkOverlap(wizard, warlock))
         {
-            volcano.visible =! volcano.visible;
+            //volcano.visible =! volcano.visible;
             stateText.text = "YOU WIN!";
             stateText.visible = true;
             wizard.kill();
@@ -60,6 +72,7 @@ window.onload = function() {
         }
         
     }
+    
     
     function checkOverlap(spriteA, spriteB) {
         
