@@ -30,20 +30,21 @@ window.onload = function() {
     var stateText;
     
     var firebolts;
+    var firebolt;
+    var tween;
+    var finalbolt;
     
     function create() {
         
         game.physics.startSystem(Phaser.Physics.ARCADE);
         
-        //volcano = game.add.tileSprite(0, 0, 800, 600, 'volcanobg');
+        volcano = game.add.tileSprite(0, 0, 800, 600, 'volcanobg');
         
         wizard = game.add.sprite(30, 230, 'wizard');
         wizard.inputEnabled = true;
         wizard.input.enableDrag();
         
         warlock = game.add.sprite(700, 230, 'warlock');
-        warlock.inputEnabled = true;
-        warlock.input.enableDrag();
         
         
         //GAMESTATE
@@ -52,21 +53,26 @@ window.onload = function() {
         stateText.visible = false;
         
         
-        //firebolts = game.add.group();
-        //firebolts.enableBody = true;
-        //firebolts.body.collideWorldBounds = true;
+        firebolts = game.add.group();
+        firebolts.enableBody = true;
+        
+        for (var i = 0; i < 4; i++)
+        {
+            var f = firebolts.create(game.rnd.integerInRange(700, 701), game.rnd.integerInRange(230, 231), 'firebolt');
+            game.physics.enable(f, Phaser.Physics.ARCADE);
+            f.body.velocity.x = game.rnd.integerInRange(-400, 0);
+            f.body.velocity.y = game.rnd.integerInRange(-200, 200);
+        }
+         
+        firebolts.setAll('body.collideWorldBounds', true);
+        firebolts.setAll('body.bounce.x', 1);
+        firebolts.setAll('body.bounce.y', 1);
+        firebolts.setAll('body.minBounceVelocity', 0);
         
         
-        var firebolt = game.add.sprite(200, 60, 'firebolt');
-        game.physics.enable(firebolt, Phaser.Physics.ARCADE);
-        firebolt.body.collideWorldBounds = true;
-        firebolt.body.immovable = true;
-        firebolt.body.velocity.x = 600;
-        firebolt.body.allowGravity = false;
-        firebolt.body.bounce.set(1);
-        
-        
-        
+        finalbolt = this.add.sprite(700, 300, 'firebolt');
+        tween = game.add.tween(finalbolt).to( { x: [ 650, 650, 750, 650 ], y: [ 300, 200, 200, 200 ] }, 1000, "Sine.easeInOut", true, -1, false);
+    
     }
     
     function update() {
@@ -80,8 +86,25 @@ window.onload = function() {
             warlock.kill();
         }
         
+        //This next if statement is causing some losing bugs, can't figure out why.
+        
+            if (checkOverlap(wizard, firebolts))
+            {
+                volcano.visible =! volcano.visible;
+                stateText.text = "YOU LOSE!";
+                stateText.visible = true;
+                wizard.kill();
+            }
+        
+        if (checkOverlap(wizard, finalbolt))
+        {
+            //volcano.visible =! volcano.visible;
+            stateText.text = "YOU LOSE!";
+            stateText.visible = true;
+            wizard.kill();
+        }
+        
     }
-    
     
     function checkOverlap(spriteA, spriteB) {
         
