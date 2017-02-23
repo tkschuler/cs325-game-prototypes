@@ -10,6 +10,9 @@ window.onload = function() {
         game.load.image( 'bg', 'assets/background.jpg' );
         
         game.load.image( 'ice', 'assets/ice.png' );
+        game.load.audio('music', 'assets/GameMusic.mp3');
+        game.load.audio('beep', 'assets/beep.wav');
+        game.load.audio('over', 'assets/over.wav');
         
     }
     
@@ -20,8 +23,18 @@ window.onload = function() {
     var icepatches;
     var bg;
     
+    var music;
+    var beep;
+    var over;
+    
     function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        
+        music = game.add.audio('music');
+        beep = game.add.audio('beep');
+        over = game.add.audio('over');
+        
+        music.play();
         
         bg = game.add.tileSprite(0, 0, 800, 600, 'bg');
         
@@ -62,10 +75,12 @@ window.onload = function() {
         stateText.text = "It took you " + game.time.totalElapsedSeconds() + " sec";
         stateText.visible = true;
         player.alpha = 1;
+        over.play();
     }
     
     function onIce (player, icepatches) {
         player.alpha = .5;
+        beep.play();
     }
     
     function update() {
