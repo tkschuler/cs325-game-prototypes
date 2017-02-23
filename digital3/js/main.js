@@ -20,12 +20,15 @@ window.onload = function() {
     var monster;
     var cursors;
     var stateText;
+    var scoreText;
     var icepatches;
     var bg;
     
     var music;
     var beep;
     var over;
+    
+    var time = 1;
     
     function create() {
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -66,24 +69,32 @@ window.onload = function() {
         stateText = game.add.text(game.world.centerX,game.world.centerY,' ', {font: '70px Arial', fill: '0x00008B' });
         stateText.anchor.setTo(0.5, 0.5);
         stateText.visible = false;
+        
+        //score Text
+        scoreText = game.add.text(32, 15,' ', {font: '15px Arial', fill: '0x00008B' });
+        scoreText.anchor.setTo(0, 0);
+        scoreText.visible = true;
     }
     
     function kill (player, monster) {
         game.time.events.stop();
-        game.debug.text('');
         monster.kill();
         stateText.text = "It took you " + game.time.totalElapsedSeconds() + " sec";
         stateText.visible = true;
         player.alpha = 1;
         over.play();
+        scoreText.visible = false;
     }
     
     function onIce (player, icepatches) {
         player.alpha = .5;
         beep.play();
+        
     }
     
     function update() {
+        
+        time = 1;
         
         game.physics.arcade.overlap(player, monster, kill, null, this);
         
@@ -136,7 +147,7 @@ window.onload = function() {
         player.alpha = 0;
         game.physics.arcade.overlap(player, icepatches, onIce, null, this);
         
-        game.debug.text('Elapsed seconds: ' + game.time.totalElapsedSeconds(), 32, 32, 'rgba(255,0,0,1)');
+        scoreText.text = "Elapsed Time:" + game.time.totalElapsedSeconds();
         
     }
 };
