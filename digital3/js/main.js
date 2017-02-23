@@ -147,7 +147,7 @@ window.onload = function() {
         player.alpha = 0;
         game.physics.arcade.overlap(player, icepatches, onIce, null, this);
         
-        scoreText.text = "Elapsed Time:" + game.time.totalElapsedSeconds();
+        scoreText.text = "Elapsed Time: " + game.time.totalElapsedSeconds();
         
     }
 };
