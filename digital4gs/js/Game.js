@@ -22,24 +22,41 @@ BasicGame.Game.prototype = {
         
         this.game.stage.backgroundColor = 0xD3D3D3;
         
-        this.s = this.game.add.sprite(600, 500, 'yellowsquare');
+        this.s = this.game.add.sprite(150, 50, 'yellowsquare');
         this.game.physics.enable(this.s, Phaser.Physics.ARCADE);
         this.s.body.bounce.y = 0;
-        this.s.body.gravity.y = 100;
+        this.s.body.gravity.x = -100;
         
         this.squares = this.game.add.group();
         this.squares.enableBody = true;
         
-        this.square = this.squares.create(325, 450, 'bluesquare');
+        //Correct Path
+        this.square = this.squares.create(50, 50, 'bluesquare');
         this.square.body.immovable = true;
-        this.square = this.squares.create(300, 325, 'bluesquare');
+        this.square = this.squares.create(75, 550, 'bluesquare');
         this.square.body.immovable = true;
-        this.square = this.squares.create(600, 575, 'bluesquare');
+        this.square = this.squares.create(350, 525, 'bluesquare');
         this.square.body.immovable = true;
-        this.square = this.squares.create(600, 300, 'bluesquare');
+        this.square = this.squares.create(325, 300, 'bluesquare');
         this.square.body.immovable = true;
-        this.square = this.squares.create(775, 425, 'bluesquare');
+        this.square = this.squares.create(200, 325, 'bluesquare');
         this.square.body.immovable = true;
+        this.square = this.squares.create(225, 100, 'bluesquare');
+        this.square.body.immovable = true;
+        
+        //Fake Paths
+        
+        this.square = this.squares.create(500, 50, 'bluesquare');
+        this.square.body.immovable = true;
+        this.square = this.squares.create(475, 325, 'bluesquare');
+        this.square.body.immovable = true;
+        this.square = this.squares.create(750, 500, 'bluesquare');
+        this.square.body.immovable = true;
+        this.square = this.squares.create(725, 150, 'bluesquare');
+        this.square.body.immovable = true;
+        this.square = this.squares.create(400, 175, 'bluesquare');
+        this.square.body.immovable = true;
+        
         
         //CURSOR
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -53,7 +70,7 @@ BasicGame.Game.prototype = {
     
     
     win: function () {
-        this.stateText.text = " You Win! Click Portal to move to Level 2";
+        this.stateText.text = " You Win! Level 3 Coming Soon!";
         this.stateText.visible = true;
         this.s.kill();
         
