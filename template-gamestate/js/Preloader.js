@@ -26,15 +26,24 @@ BasicGame.Preloader.prototype = {
 		//	As this is just a Project Template I've not provided these assets, swap them for your own.
 		this.load.image('titlePage', 'assets/title.jpg');
 		this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
-		this.load.audio('titleMusic', ['assets/Poppers and Prosecco.mp3']);
+		//this.load.audio('titleMusic', ['assets/Poppers and Prosecco.mp3']);
 		//	+ lots of other required assets here
         this.load.image( 'logo', 'assets/phaser.png' );
+        
+        //----------------------------------------------------
+        
 	},
 
 	create: function () {
 
 		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
 		this.preloadBar.cropEnabled = false;
+        
+        this.load.image( 'bluesquare', 'assets/bluesquare.png' );
+        this.load.image( 'yellowsquare', 'assets/yellowsquare.png' );
+        this.load.image( 'purplesquare', 'assets/purplesquare.png' );
+        this.load.image( 'portal', 'assets/portal.png' );
+        //blue square 25 pixels
 
 	},
 
