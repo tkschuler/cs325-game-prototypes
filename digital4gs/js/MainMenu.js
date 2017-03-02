@@ -7,12 +7,14 @@ BasicGame.MainMenu = function (game) {
     this.cursors = null;
     purplesquares = null;
     this.stateText = null;
+    this.beep = null;
 };
 
 BasicGame.MainMenu.prototype = {
     
 create: function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.beep = this.game.add.audio('beep');
     
     this.portal = this.game.add.sprite(720, 100, 'portal');
     this.portal.inputEnabled = false;
@@ -67,10 +69,12 @@ update: function () {
     this.hitSquare = this.game.physics.arcade.collide(this.s, this.squares);
     this.game.physics.arcade.overlap(this.s, this.portal, this.win, null, this);
     
+    
     if (this.cursors.left.isDown){
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.y = 0;
             this.s.body.gravity.x = -150;
+            this.beep.play();
         }
     }
     
@@ -78,6 +82,7 @@ update: function () {
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.y = 0;
             this.s.body.gravity.x = 150;
+            this.beep.play();
             
         }
     }
@@ -86,6 +91,7 @@ update: function () {
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.x = 0;
             this.s.body.gravity.y = -150;
+            this.beep.play();
         }
     }
     
@@ -93,6 +99,7 @@ update: function () {
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.x = 0;
             this.s.body.gravity.y = 150;
+            this.beep.play();
         }
     }
     

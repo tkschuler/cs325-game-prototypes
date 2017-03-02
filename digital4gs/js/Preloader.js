@@ -35,6 +35,7 @@ BasicGame.Preloader.prototype = {
         this.load.image( 'yellowsquare', 'assets/yellowsquare.png' );
         this.load.image( 'purplesquare', 'assets/purplesquare.png' );
         this.load.image( 'portal', 'assets/portal.png' );
+        this.load.audio('beep', ['assets/beep.mp3']);
         
         
 	},
