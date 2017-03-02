@@ -42,6 +42,9 @@ create: function () {
     this.square = this.squares.create(775, 425, 'bluesquare');
     this.square.body.immovable = true;
     
+    purplesquares = this.game.add.group();
+    purplesquares.enableBody = true;
+    
     //CURSOR
     this.cursors = this.game.input.keyboard.createCursorKeys();
     
@@ -76,6 +79,12 @@ update: function () {
             this.s.body.gravity.x = -150;
             this.beep.play();
         }
+        
+        purplesquares.forEach(function(psquare) {
+                              if (psquare.touched == true){
+                              psquare.kill();
+                              }
+                              }, this);
     }
     
     if (this.cursors.right.isDown){
@@ -85,6 +94,12 @@ update: function () {
             this.beep.play();
             
         }
+        
+        purplesquares.forEach(function(psquare) {
+                              if (psquare.touched == true){
+                              psquare.kill();
+                              }
+                              }, this);
     }
     
     if (this.cursors.up.isDown){
@@ -93,6 +108,12 @@ update: function () {
             this.s.body.gravity.y = -150;
             this.beep.play();
         }
+        
+        purplesquares.forEach(function(psquare) {
+                              if (psquare.touched == true){
+                              psquare.kill();
+                              }
+                              }, this);
     }
     
     if (this.cursors.down.isDown){
@@ -101,6 +122,12 @@ update: function () {
             this.s.body.gravity.y = 150;
             this.beep.play();
         }
+        
+        purplesquares.forEach(function(psquare) {
+                              if (psquare.touched == true){
+                              psquare.kill();
+                              }
+                              }, this);
     }
     
     
