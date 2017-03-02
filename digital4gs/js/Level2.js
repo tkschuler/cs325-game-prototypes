@@ -1,4 +1,5 @@
-BasicGame.MainMenu = function (game) {
+
+BasicGame.Level2 = function (game) {
     
     this.bouncy = null;
     this.portal = null;
@@ -9,14 +10,14 @@ BasicGame.MainMenu = function (game) {
     this.stateText = null;
 };
 
-BasicGame.MainMenu.prototype = {
+BasicGame.Level2.prototype = {
     
 create: function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
     this.portal = this.game.add.sprite(720, 100, 'portal');
     this.portal.inputEnabled = false;
-    this.portal.events.onInputDown.add( function() { this.state.start('Game'); }, this );
+    this.portal.events.onInputDown.add( function() { this.state.start('Level2'); }, this );
     this.game.physics.enable(this.portal, Phaser.Physics.ARCADE);
     
     this.game.stage.backgroundColor = 0xD3D3D3;
@@ -108,7 +109,7 @@ quitGame: function (pointer) {
     //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
     
     //  Then let's go back to the main menu.
-    this.state.start('Game');
+    this.state.start('Level2');
     
 }
     

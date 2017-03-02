@@ -17,7 +17,7 @@ BasicGame.Game.prototype = {
         
         this.portal = this.game.add.sprite(720, 100, 'portal');
         this.portal.inputEnabled = false;
-        this.portal.events.onInputDown.add( function() { this.state.start('MainMenu'); }, this );
+        this.portal.events.onInputDown.add( function() { this.state.start('Level2'); }, this );
         this.game.physics.enable(this.portal, Phaser.Physics.ARCADE);
         
         this.game.stage.backgroundColor = 0xD3D3D3;
@@ -109,7 +109,7 @@ BasicGame.Game.prototype = {
         //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
 
         //  Then let's go back to the main menu.
-        this.state.start('MainMenu');
+        this.state.start('Level2');
 
     }
 
