@@ -8,6 +8,7 @@ BasicGame.MainMenu = function (game) {
     purplesquares = null;
     this.stateText = null;
     this.beep = null;
+    this.levelText = null;
 };
 
 BasicGame.MainMenu.prototype = {
@@ -48,10 +49,16 @@ create: function () {
     //CURSOR
     this.cursors = this.game.input.keyboard.createCursorKeys();
     
-    //LEVEL TEXT
+    //GameOver TEXT
     this.stateText = this.game.add.text(this.game.world.centerX,this.game.world.centerY,' ', {font: '40px Arial', fill: '#fff' });
     this.stateText.anchor.setTo(0.5, 0.5);
     this.stateText.visible = false;
+    
+    //Level Text
+    this.levelText = this.game.add.text(20, 15,'Level 1', {font: '22px Impact', fill: '#0000ff' });
+    this.levelText.anchor.setTo(0, 0);
+    this.levelText.visible = true;
+    this.levelText.alpha = .6;
     
 },
     
@@ -76,7 +83,7 @@ update: function () {
     if (this.cursors.left.isDown){
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.y = 0;
-            this.s.body.gravity.x = -150;
+            this.s.body.gravity.x = -400;
             this.beep.play();
         }
         
@@ -90,7 +97,7 @@ update: function () {
     if (this.cursors.right.isDown){
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.y = 0;
-            this.s.body.gravity.x = 150;
+            this.s.body.gravity.x = 400;
             this.beep.play();
             
         }
@@ -105,7 +112,7 @@ update: function () {
     if (this.cursors.up.isDown){
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.x = 0;
-            this.s.body.gravity.y = -150;
+            this.s.body.gravity.y = -400;
             this.beep.play();
         }
         
@@ -119,7 +126,7 @@ update: function () {
     if (this.cursors.down.isDown){
         if (this.s.body.touching.down || this.s.body.touching.left || this.s.body.touching.right || this.s.body.touching.up){
             this.s.body.gravity.x = 0;
-            this.s.body.gravity.y = 150;
+            this.s.body.gravity.y = 400;
             this.beep.play();
         }
         

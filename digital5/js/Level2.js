@@ -8,6 +8,8 @@ BasicGame.Level2 = function (game) {
     purplesquares = null;
     this.stateText = null;
     this.beep = null;
+    this.levelText = null;
+    
 };
 
 BasicGame.Level2.prototype = {
@@ -92,6 +94,12 @@ create: function () {
                           
                           });
     */
+    
+    //Level Text
+    this.levelText = this.game.add.text(20, 15,'Level 3', {font: '22px Impact', fill: '#0000ff' });
+    this.levelText.anchor.setTo(0, 0);
+    this.levelText.visible = true;
+    this.levelText.alpha = .6;
 },
     
     
