@@ -1,4 +1,4 @@
-BasicGame.Level2 = function (game) {
+BasicGame.Level5 = function (game) {
     
     this.bouncy = null;
     this.portal = null;
@@ -14,7 +14,7 @@ BasicGame.Level2 = function (game) {
     
 };
 
-BasicGame.Level2.prototype = {
+BasicGame.Level5.prototype = {
     
 create: function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -23,60 +23,39 @@ create: function () {
     this.lost = this.game.add.audio('lose');
     
     
-    this.portal = this.game.add.sprite(150, 500, 'portal');
+    this.portal = this.game.add.sprite(350, 225, 'portal');
     this.portal.inputEnabled = false;
-    this.portal.events.onInputDown.add( function() { this.state.start('Level3'); }, this );
     this.game.physics.enable(this.portal, Phaser.Physics.ARCADE);
     
     this.game.stage.backgroundColor = 0xD3D3D3;
     
-    this.s = this.game.add.sprite(325, 400, 'yellowsquare');
+    this.s = this.game.add.sprite(375, 400, 'yellowsquare');
     this.game.physics.enable(this.s, Phaser.Physics.ARCADE);
     this.s.body.bounce.y = 0;
-    this.s.body.gravity.y = 100;
+    this.s.body.gravity.y = -100;
     
     this.squares = this.game.add.group();
     this.squares.enableBody = true;
     
-    this.square = this.squares.create(325, 450, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(325, 100, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(50, 350, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(75, 75, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(25, 125, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(300, 500, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(275, 475, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(300, 50, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(775, 325, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(750, 0, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(325, 25, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(350, 550, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(600, 475, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(575, 575, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(500, 75, 'bluesquare');
-    this.square.body.immovable = true;
-    this.square = this.squares.create(475, 500, 'bluesquare');
-    this.square.body.immovable = true;
-    //this.square = this.squares.create(675, 325, 'bluesquare');
+    this.square = this.squares.create(375, 300, 'bluesquare');
     this.square.body.immovable = true;
     
     purplesquares = this.game.add.group();
     purplesquares.enableBody = true;
     
     this.square = purplesquares.create(325, 325, 'purplesquare');
+    this.square.body.immovable = true;
+    this.square.touched = false;
+    this.square.alpha = 0;
+    this.game.add.tween(this.square).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    
+    this.square = purplesquares.create(425, 325, 'purplesquare');
+    this.square.body.immovable = true;
+    this.square.touched = false;
+    this.square.alpha = 0;
+    this.game.add.tween(this.square).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    
+    this.square = purplesquares.create(375, 450, 'purplesquare');
     this.square.body.immovable = true;
     this.square.touched = false;
     this.square.alpha = 0;
@@ -92,16 +71,8 @@ create: function () {
     this.stateText.anchor.setTo(0.5, 0.5);
     this.stateText.visible = false;
     
-    /*
-    purplesquares.forEach(function(square) {
-                          square.alpha = 0;
-                          this.game.add.tween(square).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 1000, true);
-                          
-                          });
-    */
-    
     //Level Text
-    this.levelText = this.game.add.text(20, 15,'Level 3', {font: '22px Impact', fill: '#0000ff' });
+    this.levelText = this.game.add.text(20, 15,'Level 4 - Coming Soon', {font: '22px Impact', fill: '#0000ff' });
     this.levelText.anchor.setTo(0, 0);
     this.levelText.visible = true;
     this.levelText.alpha = .6;
@@ -114,7 +85,7 @@ win: function () {
     this.stateText.visible = true;
     this.s.kill();
     
-    this.portal.events.onInputDown.add( function() { this.state.start('Level5'); }, this );
+    this.portal.events.onInputDown.add( function() { this.state.start('Level4'); }, this );
     this.portal.inputEnabled = true;
     
 },
@@ -210,10 +181,6 @@ update: function () {
     
 quitGame: function (pointer) {
     
-    //  Here you should destroy anything you no longer need.
-    //  Stop music, delete sprites, purge caches, free resources, all that good stuff.
-    
-    //  Then let's go back to the main menu.
     this.state.start('Level3');
     
 }

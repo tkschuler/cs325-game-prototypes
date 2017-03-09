@@ -12,6 +12,7 @@ window.onload = function() {
 	game.state.add('Game', BasicGame.Game);
     game.state.add('Level2', BasicGame.Level2);
     game.state.add('BlueBlocks', BasicGame.BlueBlocks);
+    game.state.add('Level5', BasicGame.Level5);
     
 
 	//	Now start the Boot state.
