@@ -9,6 +9,8 @@ BasicGame.Level2 = function (game) {
     this.stateText = null;
     this.beep = null;
     this.levelText = null;
+    this.won = null
+    this.lost = null;
     
 };
 
@@ -17,6 +19,9 @@ BasicGame.Level2.prototype = {
 create: function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.beep = this.game.add.audio('beep');
+    this.won = this.game.add.audio('win');
+    this.lost = this.game.add.audio('lose');
+    
     
     this.portal = this.game.add.sprite(150, 500, 'portal');
     this.portal.inputEnabled = false;
@@ -104,10 +109,26 @@ create: function () {
     
     
 win: function () {
-    this.stateText.text = " You Win! Level 4 coming soon";
+    this.won.play();
+    this.stateText.text = " You Win! Click Portal to move to Level 4";
     this.stateText.visible = true;
     this.s.kill();
     
+    this.portal.events.onInputDown.add( function() { this.state.start('Level4'); }, this );
+    this.portal.inputEnabled = true;
+    
+},
+    
+loss: function () {
+    //this.won.play();
+    this.stateText.text = " You Lose! Click Portal to restart";
+    this.stateText.visible = true;
+    if (this.s.exists){
+        this.lost.play();
+    }
+    this.s.kill();
+    
+    this.portal.events.onInputDown.add( function() { this.state.start('BlueBlocks'); }, this );
     this.portal.inputEnabled = true;
     
 },
@@ -117,6 +138,10 @@ update: function () {
     this.game.physics.arcade.collide(this.s, purplesquares);
     this.hitSquare = this.game.physics.arcade.collide(this.s, this.squares);
     this.game.physics.arcade.overlap(this.s, this.portal, this.win, null, this);
+    
+    if (this.s.y > this.game.world.y + this.game.world.height || this.s.y < 0 || this.s.x > this.game.world.x + this.game.world.width || this.s.x < 0){
+        this.loss();
+    }
     
     purplesquares.forEach(function(psquare) {
                           if (psquare.body.touching.down || psquare.body.touching.left || psquare.body.touching.right || psquare.body.touching.up){

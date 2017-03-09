@@ -8,6 +8,8 @@ BasicGame.MainMenu = function (game) {
     purplesquares = null;
     this.stateText = null;
     this.beep = null;
+    this.won = null;
+    this.lost = null;
     this.levelText = null;
 };
 
@@ -16,10 +18,12 @@ BasicGame.MainMenu.prototype = {
 create: function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.beep = this.game.add.audio('beep');
+    this.won = this.game.add.audio('win');
+    this.lost = this.game.add.audio('lose');
     
     this.portal = this.game.add.sprite(720, 100, 'portal');
     this.portal.inputEnabled = false;
-    this.portal.events.onInputDown.add( function() { this.state.start('Game'); }, this );
+    //this.portal.events.onInputDown.add( function() { this.state.start('Game'); }, this );
     this.game.physics.enable(this.portal, Phaser.Physics.ARCADE);
     
     this.game.stage.backgroundColor = 0xD3D3D3;
@@ -64,20 +68,42 @@ create: function () {
     
     
 win: function () {
+    this.won.play();
     this.stateText.text = " You Win! Click Portal to move to Level 2";
     this.stateText.visible = true;
     this.s.kill();
     
+    this.portal.events.onInputDown.add( function() { this.state.start('Game'); }, this );
     this.portal.inputEnabled = true;
     
 },
     
+loss: function () {
+    //this.won.play();
+    this.stateText.text = " You Lose! Click Portal to restart";
+    this.stateText.visible = true;
+    if (this.s.exists){
+        this.lost.play();
+    }
+    this.s.kill();
     
+    this.portal.events.onInputDown.add( function() { this.state.start('BlueBlocks'); }, this );
+    this.portal.inputEnabled = true;
+    
+},
+
 update: function () {
     this.game.physics.arcade.collide(this.s, this.squares);
     this.game.physics.arcade.collide(this.s, this.purplesquares);
     this.hitSquare = this.game.physics.arcade.collide(this.s, this.squares);
     this.game.physics.arcade.overlap(this.s, this.portal, this.win, null, this);
+    
+    
+    
+    if (this.s.y > this.game.world.y + this.game.world.height || this.s.y < 0 || this.s.x > this.game.world.x + this.game.world.width || this.s.x < 0){
+        this.loss();
+    }
+
     
     
     if (this.cursors.left.isDown){
@@ -136,11 +162,6 @@ update: function () {
                               }
                               }, this);
     }
-    
-    
-    
-    
-    
 },
     
 quitGame: function (pointer) {
