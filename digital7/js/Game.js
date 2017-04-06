@@ -21,17 +21,21 @@ BasicGame.Game = function (game) {
     
     this.P1Health = 50;
     this.P2Health = 50;
+    
+    this.timer = null;
+    this.total = 3;
 };
 
 BasicGame.Game.prototype = {
 
     create: function () {
 
-        //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
+        this.timer = this.game.time.create(false);
+        this.timer.loop(1000, this.updateCounter, this);
+        this.timer.start();
         
-        // Create a sprite at the center of the screen using the 'logo' image.
-        this.spaceship1 = this.game.add.sprite( this.game.world.centerX, this.game.world.centerY, 'spaceship1' );
-        this.spaceship2 = this.game.add.sprite( 50, 50, 'spaceship2' );
+        this.spaceship1 = this.game.add.sprite( 750, 520, 'spaceship1' );
+        this.spaceship2 = this.game.add.sprite( 50, 75, 'spaceship2' );
         this.spaceship1.anchor.setTo(0.5,0.5);
         this.spaceship2.anchor.setTo(0.5,0.5);
         
@@ -117,12 +121,21 @@ BasicGame.Game.prototype = {
         }
     },
     
+    updateCounter: function () {
+        
+        this.total--;
+        
+    },
+    
     update: function () {
         this.game.physics.arcade.collide(this.weapon1, this.spaceship2);
         this.game.physics.arcade.overlap(this.weapon1.bullets, this.spaceship2, this.hitP2, null, this);
         
         this.game.physics.arcade.collide(this.weapon2, this.spaceship1);
         this.game.physics.arcade.overlap(this.weapon2.bullets, this.spaceship1, this.hitP1, null, this);
+        
+        if (this.total == 0)
+        {
         
         //Player 1 Controls
         if (this.cursors1.up.isDown)
@@ -182,12 +195,31 @@ BasicGame.Game.prototype = {
         {
             this.weapon2.fire();
         }
+        }
         
         
         this.game.world.wrap(this.spaceship1, 16);
         this.game.world.wrap(this.spaceship2, 16);
+        
+        if (this.total == 0)
+        {
+            this.timer.destroy();
+        }
       
     },
+    
+    render: function () {
+        //this.game.debug.text('Time until event: ' + this.timer.duration.toFixed(0), 32, 32);
+        if (this.total>0)
+        {
+        this.game.debug.text('' + this.total, 400, 300);
+        }
+        if (this.total == 0)
+        {
+         this.game.debug.text('', 400, 300);
+        }
+    },
+
 
     quitGame: function () {
 
