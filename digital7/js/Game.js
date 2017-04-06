@@ -24,11 +24,25 @@ BasicGame.Game = function (game) {
     
     this.timer = null;
     this.total = 3;
+    this.space = null;
+    
+    this.kaboom = null;
+    this.explosion = null;
+    
+    this.music = null;
+    this.countdown = null;
+    
 };
 
 BasicGame.Game.prototype = {
 
     create: function () {
+        this.space = this.game.add.tileSprite(0, 0, 800, 600, 'space');
+        this.music = this.game.add.audio('bgmusic');
+        this.game.time.events.add(Phaser.Timer.SECOND * 3.5, this.playMusic, this);
+        
+        this.countdown = this.game.add.audio('countdown');
+        this.countdown.play();
 
         this.timer = this.game.time.create(false);
         this.timer.loop(1000, this.updateCounter, this);
@@ -38,6 +52,9 @@ BasicGame.Game.prototype = {
         this.spaceship2 = this.game.add.sprite( 50, 75, 'spaceship2' );
         this.spaceship1.anchor.setTo(0.5,0.5);
         this.spaceship2.anchor.setTo(0.5,0.5);
+        
+        this.spaceship1.animations.add('kaboom');
+        this.spaceship2.animations.add('kaboom');
         
         this.game.physics.arcade.enable(this.spaceship1);
         this.game.physics.arcade.enable(this.spaceship2);
@@ -99,9 +116,19 @@ BasicGame.Game.prototype = {
         this.stateText.visible = false;
     },
     
+    playMusic: function () {
+        this.music.play();
+        
+    },
+    
     hitP2: function () {
         this.P1Health -= 1;
         this.p1Text.text = "Player1 Health:" + this.P1Health;
+        
+        this.explosion = this.game.add.sprite(this.spaceship2.body.x - 50, this.spaceship2.body.y -50, 'kaboom');
+        this.kaboom = this.explosion.animations.add('kaboom');
+        this.explosion.animations.play('kaboom', 50, false, true);
+        
         if (this.P1Health <= 0)
         {
             this.spaceship2.kill();
@@ -113,6 +140,10 @@ BasicGame.Game.prototype = {
     hitP1: function () {
         this.P2Health -= 1;
         this.p2Text.text = "Player2 Health:" + this.P2Health;
+        
+        this.explosion = this.game.add.sprite(this.spaceship1.body.x - 50, this.spaceship1.body.y -50, 'kaboom');
+        this.kaboom = this.explosion.animations.add('kaboom');
+        this.explosion.animations.play('kaboom', 50, false, true);
         if (this.P2Health <= 0)
         {
             this.spaceship1.kill();

@@ -37,6 +37,10 @@ BasicGame.Preloader.prototype = {
         this.load.image( 'bullet1', 'assets/Bullet1.png' );
         this.load.image( 'bullet2', 'assets/Bullet2.png' );
         this.load.image( 'star', 'assets/star.png' );
+        this.load.image( 'space', 'assets/space.jpg' );
+        this.game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
+        this.load.audio('bgmusic', ['assets/bgmusic.mp3']);
+        this.load.audio('countdown', ['assets/countdown3.mp3']);
 	},
 
 	create: function () {
