@@ -2,38 +2,64 @@
 
 BasicGame.MainMenu = function (game) {
 
-	this.music = null;
-	this.playButton = null;
+    var distance = 300;
+    var speed = 6;
+    var max = 400;
+    this.star = null;
+    this.texture = null;
+    
+    var xx = [];
+    var yy = [];
+    var zz = [];
 
 };
 
 BasicGame.MainMenu.prototype = {
 
 	create: function () {
-
-		//	We've already preloaded our assets, so let's kick right into the Main Menu itself.
-		//	Here all we're doing is playing some music and adding a picture and button
-		//	Naturally I expect you to do something significantly better :)
-
-		this.music = this.add.audio('titleMusic');
-		this.music.play();
-
-		this.add.sprite(0, 0, 'titlePage');
-
-		this.playButton = this.add.button( 303, 400, 'playButton', this.startGame, this, 'over', 'out', 'down');
+        
+        this.star = this.game.make.sprite(0, 0, 'star');
+        this.texture = this.game.add.renderTexture(800, 600, 'texture');
+        
+        this.game.add.sprite(0, 0, this.texture);
+        
+        for (var i = 0; i < this.max; i++)
+        {
+            this.xx[i] = Math.floor(Math.random() * 800) - 400;
+            this.yy[i] = Math.floor(Math.random() * 600) - 300;
+            this.zz[i] = Math.floor(Math.random() * 1700) - 100;
+        }
 
 	},
 
 	update: function () {
+        
+        this.texture.clear();
+        
+        for (var i = 0; i < this.max; i++)
+        {
+            var perspective = this.distance / (this.distance - this.zz[i]);
+            var x = this.game.world.centerX + this.xx[i] * this.perspective;
+            var y = this.game.world.centerY + this.yy[i] * this.perspective;
+            
+            this.zz[i] += this.speed;
+            
+            if (this.zz[i] > 300)
+            {
+                this.zz[i] -= 600;
+            }
+            
+            //  Swap this for a standard drawImage call
+            this.texture.renderXY(star, x, y);
+        }
 
-		//	Do some nice funky main menu effect here
 
 	},
 
 	startGame: function (pointer) {
 
 		//	Ok, the Play Button has been clicked or touched, so let's stop the music (otherwise it'll carry on playing)
-		this.music.stop();
+		//this.music.stop();
 
 		//	And start the actual game
 		this.state.start('Game');

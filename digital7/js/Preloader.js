@@ -36,6 +36,7 @@ BasicGame.Preloader.prototype = {
         this.load.image( 'spaceship2', 'assets/spaceship2.png' );
         this.load.image( 'bullet1', 'assets/Bullet1.png' );
         this.load.image( 'bullet2', 'assets/Bullet2.png' );
+        this.load.image( 'star', 'assets/star.png' );
 	},
 
 	create: function () {
