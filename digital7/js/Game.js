@@ -84,7 +84,7 @@ BasicGame.Game.prototype = {
         this.p1Text.anchor.setTo(0, 0);
         this.p1Text.visible = true;
         
-        this.levelText = this.game.add.text(720, 560,'Level 3', {font: '22px Impact', fill: '#ffffff' });
+        this.levelText = this.game.add.text(720, 560,'Level 1', {font: '22px Impact', fill: '#ffffff' });
         this.levelText.anchor.setTo(0, 0);
         this.levelText.visible = true;
         this.levelText.alpha = .7;
