@@ -32,6 +32,8 @@ BasicGame.Game = function (game) {
     this.music = null;
     this.countdown = null;
     
+    this.shield = null;
+    
 };
 
 BasicGame.Game.prototype = {
@@ -48,10 +50,15 @@ BasicGame.Game.prototype = {
         this.timer.loop(1000, this.updateCounter, this);
         this.timer.start();
         
+        
         this.spaceship1 = this.game.add.sprite( 750, 520, 'spaceship1' );
         this.spaceship2 = this.game.add.sprite( 50, 75, 'spaceship2' );
         this.spaceship1.anchor.setTo(0.5,0.5);
         this.spaceship2.anchor.setTo(0.5,0.5);
+        
+        this.shield = this.game.add.sprite( 0, 0, 'shield' );
+        this.shield.anchor.setTo(.5,.5);
+                                        
         
         this.spaceship1.animations.add('kaboom');
         this.spaceship2.animations.add('kaboom');
@@ -236,6 +243,9 @@ BasicGame.Game.prototype = {
         {
             this.timer.destroy();
         }
+        
+        this.shield.x = Math.floor(this.spaceship1.x);
+        this.shield.y = Math.floor(this.spaceship1.y);
       
     },
     

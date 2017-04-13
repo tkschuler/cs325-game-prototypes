@@ -41,6 +41,8 @@ BasicGame.Preloader.prototype = {
         this.game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
         this.load.audio('bgmusic', ['assets/bgmusic.mp3']);
         this.load.audio('countdown', ['assets/countdown3.mp3']);
+        
+        this.load.image( 'shield', 'assets/shield.png' );
 	},
 
 	create: function () {
