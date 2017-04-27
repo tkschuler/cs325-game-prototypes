@@ -72,22 +72,23 @@ BasicGame.Game.prototype = {
         this.cursors = this.game.input.keyboard.createCursorKeys();
         
         //Level Text
-        this.levelText = this.game.add.text(20, 15,'Count: ' + this.greenCount, {font: '22px Impact', fill: '#0000ff' });
+        this.levelText = this.game.add.text(20, 15,'Level 1', {font: '22px Impact', fill: '#0000ff' });
         this.levelText.anchor.setTo(0, 0);
         this.levelText.visible = true;
         this.levelText.alpha = .6;
         
         //LEVEL TEXT
-        this.stateText = this.game.add.text(this.game.world.centerX,this.game.world.centerY,' ', {font: '70px Arial', fill: '#0000ff' });
+        this.stateText = this.game.add.text(this.game.world.centerX,this.game.world.centerY,' ', {font: '50px Arial', fill: '#0000ff' });
         this.stateText.anchor.setTo(0.5, 0.5);
         this.stateText.visible = false;
     },
     
 
     update: function () {
+        /*
         this.levelText.kill();
         this.levelText = this.game.add.text(20, 15,'Count: ' + this.redCount, {font: '22px Impact', fill: '#0000ff' });
-        
+        */
         
         this.game.physics.arcade.overlap(this.greensquares, this.greensquares, this.greenCollisionHandler, null, this);
         this.game.physics.arcade.overlap(this.redsquares, this.redsquares, this.redCollisionHandler, null, this);
@@ -109,20 +110,20 @@ BasicGame.Game.prototype = {
         //Cursor Controls
         if (this.cursors.left.isDown)
         {
-            this.blacksquare.body.velocity.x = -200;
+            this.blacksquare.body.velocity.x = -100;
         }
         else if (this.cursors.right.isDown)
         {
-            this.blacksquare.body.velocity.x = 200;
+            this.blacksquare.body.velocity.x = 100;
         }
         
         if (this.cursors.up.isDown)
         {
-            this.blacksquare.body.velocity.y = -200;
+            this.blacksquare.body.velocity.y = -100;
         }
         else if (this.cursors.down.isDown)
         {
-            this.blacksquare.body.velocity.y = 200;
+            this.blacksquare.body.velocity.y = 100;
         }
         
         if (this.greenCount == 2)
@@ -138,11 +139,14 @@ BasicGame.Game.prototype = {
         }
         
         if (this.redCount == 3  && this.greenCount == 2){
-            this.stateText.text = "You Win";
+            this.stateText.text = "You win, click to go to next level.";
             this.win.play();
             this.stateText.visible = true;
             this.redCount++;
             this.greenCount++;
+            
+            this.greybg.events.onInputDown.add( function() { this.state.start('Level2'); }, this );
+            this.greybg.inputEnabled = true;
         }
     },
     
