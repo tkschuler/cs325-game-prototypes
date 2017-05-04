@@ -47,6 +47,9 @@ BasicGame.Game.prototype = {
         this.greensquare = this.greensquares.create(450, 300, 'greensquare');
         this.greensquare.body.mass = -50;
         this.greensquare.overlap = false;
+        this.greensquare = this.greensquares.create(400, 500, 'greensquare');
+        this.greensquare.body.mass = -50;
+        this.greensquare.overlap = false;
         
         
         this.redsquare = this.redsquares.create(425, 300, 'redsquare');
@@ -148,6 +151,16 @@ BasicGame.Game.prototype = {
             this.greybg.events.onInputDown.add( function() { this.state.start('Level2'); }, this );
             this.greybg.inputEnabled = true;
         }
+        
+        
+        //Test
+        this.greensquares.forEach(function(greensquare) {
+                                  greensquare.x = greensquare.x-greensquare.x%4;
+                                  greensquare.y = greensquare.y-greensquare.y%4;
+                                  }, this);
+        
+
+        
     },
     
     //Green Square Collision Handler
